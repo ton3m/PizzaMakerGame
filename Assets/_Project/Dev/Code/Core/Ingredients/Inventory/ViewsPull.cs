@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using PizzaMaker.Code.Core;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace PizzaMaker.Code.Core.Ingredients
+namespace PizzaMaker.Code.Core.Ingredients.Inventory
 {
     public class ViewsPull : IViewsPull
     {
@@ -14,6 +13,7 @@ namespace PizzaMaker.Code.Core.Ingredients
         public void Add(Ingredient ingredient)
         {
             ingredient.gameObject.SetActive(false);
+            
             ingredient.transform.parent = null;
             
             _ingredients.Add(ingredient);
@@ -21,7 +21,7 @@ namespace PizzaMaker.Code.Core.Ingredients
         
         public GameObject Get(IngredientId id)
         {
-            Ingredient ingredient = _ingredients.FirstOrDefault(i => i.Id == id);
+            Ingredient ingredient = _ingredients.Last(i => i.Id == id);
             
             if (ingredient == null)
                 throw new NullReferenceException($"Ingredient view with id {id} not found.");
@@ -32,6 +32,7 @@ namespace PizzaMaker.Code.Core.Ingredients
             
             Object.Destroy(ingredient);
             
+            Debug.Log(view.GetComponent<Ingredient>());
             return view;
         }
     }

@@ -1,22 +1,25 @@
 using UnityEngine;
 
-public class StunnedRotation : MonoBehaviour
+namespace PizzaMaker.LegacyCode.VFX
 {
-    [Header("Rotate axises by degrees per second")]
-    public Vector3 rotateVector = Vector3.zero;
-
-    public enum spaceEnum { Local, World };
-    public spaceEnum rotateSpace;
-
-    void Update()
+    public class StunnedRotation : MonoBehaviour
     {
-        if (rotateSpace == spaceEnum.Local)
+        [Header("Rotate axises by degrees per second")]
+        public Vector3 rotateVector = Vector3.zero;
+
+        public enum spaceEnum { Local, World };
+        public spaceEnum rotateSpace;
+
+        void Update()
         {
-            transform.Rotate(rotateVector * Time.deltaTime);
-        }
-        if (rotateSpace == spaceEnum.World)
-        {
-            transform.Rotate(rotateVector * Time.deltaTime, Space.World);
+            if (rotateSpace == spaceEnum.Local)
+            {
+                transform.Rotate(rotateVector * Time.deltaTime);
+            }
+            if (rotateSpace == spaceEnum.World)
+            {
+                transform.Rotate(rotateVector * Time.deltaTime, Space.World);
+            }
         }
     }
 }

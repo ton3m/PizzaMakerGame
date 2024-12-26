@@ -1,5 +1,5 @@
-﻿using PizzaMaker.Code.Core.Ingredients;
-using PizzaMaker.Code.Core.Ingredients.Abstraction;
+﻿using PizzaMaker.Code.Core.Ingredients.Inventory;
+using PizzaMaker.Code.Core.Ingredients.Inventory.Abstraction;
 
 namespace PizzaMaker.Code.Core.Ingredients
 {

@@ -1,4 +1,4 @@
-﻿namespace PizzaMaker.Code.Core.Ingredients.Abstraction
+﻿namespace PizzaMaker.Code.Core.Ingredients.Inventory.Abstraction
 {
     public interface IInventoryView
     {

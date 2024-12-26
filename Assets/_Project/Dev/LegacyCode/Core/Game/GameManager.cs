@@ -1,37 +1,40 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace PizzaMaker.LegacyCode.Core.Game
 {
-    private static GameManager instance;
-    public static GameManager Instance { get => instance; }
-    [HideInInspector] public bool gameStarted;
-    [HideInInspector] public bool gameWon;
-    [HideInInspector] public bool gameLost;
-    public int playerSize;
-
-    private void Awake()
+    public class GameManager : MonoBehaviour
     {
-        instance = this;
-        SettingData();
-    }
+        private static GameManager instance;
+        public static GameManager Instance { get => instance; }
+        [HideInInspector] public bool gameStarted;
+        [HideInInspector] public bool gameWon;
+        [HideInInspector] public bool gameLost;
+        public int playerSize;
 
-    private void Update()
-    {
-        if (playerSize <= 0)
+        private void Awake()
         {
-            gameLost = true;
+            instance = this;
+            SettingData();
         }
-    }
 
-    private void SettingData()
-    {
-        if (!PlayerPrefs.HasKey("Vibrate"))
+        private void Update()
         {
-            PlayerPrefs.SetInt("Vibrate", 1);
+            if (playerSize <= 0)
+            {
+                gameLost = true;
+            }
         }
-        if (!PlayerPrefs.HasKey("Sound"))
+
+        private void SettingData()
         {
-            PlayerPrefs.SetInt("Sound", 1);
+            if (!PlayerPrefs.HasKey("Vibrate"))
+            {
+                PlayerPrefs.SetInt("Vibrate", 1);
+            }
+            if (!PlayerPrefs.HasKey("Sound"))
+            {
+                PlayerPrefs.SetInt("Sound", 1);
+            }
         }
     }
 }

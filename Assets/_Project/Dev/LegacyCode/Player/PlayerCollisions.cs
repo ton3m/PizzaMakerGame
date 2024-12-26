@@ -1,59 +1,64 @@
 using DG.Tweening;
+using PizzaMaker.LegacyCode.Core.Game;
+using PizzaMaker.LegacyCode.Obstacles;
 using UnityEngine;
 
-public class PlayerCollisions : MonoBehaviour
+namespace PizzaMaker.LegacyCode.Player
 {
-    [SerializeField] private AudioSource collectSound;
-    [SerializeField] private AudioSource winSound;
-    [SerializeField] private AudioSource deathSound;
-    private Animator playerAnim;
-
-    private void Start()
+    public class PlayerCollisions : MonoBehaviour
     {
-        playerAnim = GetComponent<Animator>();
-    }
+        [SerializeField] private AudioSource collectSound;
+        [SerializeField] private AudioSource winSound;
+        [SerializeField] private AudioSource deathSound;
+        private Animator playerAnim;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        int soundOn = PlayerPrefs.GetInt("Sound");
-        if (other.CompareTag("PickUp"))
+        private void Start()
         {
-            if (soundOn == 1)
+            playerAnim = GetComponent<Animator>();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            int soundOn = PlayerPrefs.GetInt("Sound");
+            if (other.CompareTag("PickUp"))
             {
-                collectSound.Play();
+                if (soundOn == 1)
+                {
+                    collectSound.Play();
+                }
+                GameManager.Instance.playerSize += 1;
+                other.GetComponent<Collider>().enabled = false;
+                other.transform.DOScale(Vector3.zero, 0.5f).OnComplete(() =>
+                {
+                    other.gameObject.SetActive(false);
+                });
             }
-            GameManager.Instance.playerSize += 1;
-            other.GetComponent<Collider>().enabled = false;
-            other.transform.DOScale(Vector3.zero, 0.5f).OnComplete(() =>
+            if (other.CompareTag("Block"))
             {
-                other.gameObject.SetActive(false);
-            });
-        }
-        if (other.CompareTag("Block"))
-        {
-            playerAnim.SetTrigger("kick");
-            other.GetComponent<Block>().CheckHit();
-        }
-        if (other.CompareTag("Gate"))
-        {
-            other.GetComponent<Gate>().ExecuteOperation();
-        }
-        if (other.CompareTag("Trap"))
-        {
-            GameManager.Instance.gameLost = true;
-            if (soundOn == 1)
-            {
-                deathSound.Play();
+                playerAnim.SetTrigger("kick");
+                other.GetComponent<Block>().CheckHit();
             }
-            GetComponent<Collider>().enabled = false;
-        }
-        if (other.CompareTag("Finish"))
-        {
-            if (soundOn == 1)
+            if (other.CompareTag("Gate"))
             {
-                winSound.Play();
+                other.GetComponent<Gate>().ExecuteOperation();
             }
-            GameManager.Instance.gameWon = true;
+            if (other.CompareTag("Trap"))
+            {
+                GameManager.Instance.gameLost = true;
+                if (soundOn == 1)
+                {
+                    deathSound.Play();
+                }
+                GetComponent<Collider>().enabled = false;
+            }
+            if (other.CompareTag("Finish"))
+            {
+                if (soundOn == 1)
+                {
+                    winSound.Play();
+                }
+                GameManager.Instance.gameWon = true;
+            }
         }
     }
 }

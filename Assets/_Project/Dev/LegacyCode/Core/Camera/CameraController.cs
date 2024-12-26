@@ -1,32 +1,36 @@
 using DG.Tweening;
+using PizzaMaker.LegacyCode.Core.Game;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+namespace PizzaMaker.LegacyCode.Core.Camera
 {
-    [SerializeField] private Vector3 minPosition;
-    [SerializeField] private Vector3 maxPosition;
-    [SerializeField] private Vector3 winPosition;
-    private float progress;
-
-    private void Update()
+    public class CameraController : MonoBehaviour
     {
-        CameraZoom();
-    }
+        [SerializeField] private Vector3 minPosition;
+        [SerializeField] private Vector3 maxPosition;
+        [SerializeField] private Vector3 winPosition;
+        private float progress;
 
-    private void CameraZoom()
-    {
-        float playerSize = GameManager.Instance.playerSize;
-
-        if (!GameManager.Instance.gameWon && !GameManager.Instance.gameLost)
+        private void Update()
         {
-            /* float progress = (float)(playerSize - 1) / 40;*/
-            Vector3 currentPos = Vector3.Lerp(minPosition, maxPosition, 0);
-            transform.DOLocalMove(currentPos, 1);
+            CameraZoom();
         }
 
-        if (GameManager.Instance.gameWon)
+        private void CameraZoom()
         {
-            transform.DOLocalMove(winPosition, 1).SetDelay(1.65f);
+            float playerSize = GameManager.Instance.playerSize;
+
+            if (!GameManager.Instance.gameWon && !GameManager.Instance.gameLost)
+            {
+                /* float progress = (float)(playerSize - 1) / 40;*/
+                Vector3 currentPos = Vector3.Lerp(minPosition, maxPosition, 0);
+                transform.DOLocalMove(currentPos, 1);
+            }
+
+            if (GameManager.Instance.gameWon)
+            {
+                transform.DOLocalMove(winPosition, 1).SetDelay(1.65f);
+            }
         }
     }
 }

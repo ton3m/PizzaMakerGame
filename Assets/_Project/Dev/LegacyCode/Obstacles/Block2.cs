@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace PizzaMaker._Project.Dev.LegacyCode.Obstacles
+namespace PizzaMaker.LegacyCode.Obstacles
 {
     public class Block2 : MonoBehaviour
     {

@@ -1,23 +1,27 @@
+using PizzaMaker.LegacyCode.Core.Game;
 using UnityEngine;
 
-public class CameraHolder : MonoBehaviour
+namespace PizzaMaker.LegacyCode.Core.Camera
 {
-    [SerializeField] private Transform player;
-    private Vector3 initRotation;
-
-    private void Start()
+    public class CameraHolder : MonoBehaviour
     {
-        initRotation = transform.eulerAngles;
-    }
+        [SerializeField] private Transform player;
+        private Vector3 initRotation;
 
-    private void Update()
-    {
-        transform.position = new Vector3(player.position.x, player.position.y, player.position.z);
-
-        if (GameManager.Instance.gameWon || GameManager.Instance.gameLost)
+        private void Start()
         {
-            return;
+            initRotation = transform.eulerAngles;
         }
-        transform.eulerAngles = new Vector3(player.eulerAngles.x + initRotation.x, player.eulerAngles.y + initRotation.y, 0);
+
+        private void Update()
+        {
+            transform.position = new Vector3(player.position.x, player.position.y, player.position.z);
+
+            if (GameManager.Instance.gameWon || GameManager.Instance.gameLost)
+            {
+                return;
+            }
+            transform.eulerAngles = new Vector3(player.eulerAngles.x + initRotation.x, player.eulerAngles.y + initRotation.y, 0);
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace PizzaMaker.Code.UI.Buttons
 {
-    public class DisableButton : ActionButton
+    public class DisableButton : OnClickedButton
     {
         [SerializeField] private GameObject _targetObject;
 

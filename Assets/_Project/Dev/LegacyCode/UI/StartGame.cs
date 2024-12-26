@@ -1,9 +1,13 @@
+using PizzaMaker.LegacyCode.Core.Game;
 using UnityEngine;
 
-public class StartGame : MonoBehaviour
+namespace PizzaMaker.LegacyCode.UI
 {
-    public void GameStart()
+    public class StartGame : MonoBehaviour
     {
-        GameManager.Instance.gameStarted = true;
+        public void GameStart()
+        {
+            GameManager.Instance.gameStarted = true;
+        }
     }
 }

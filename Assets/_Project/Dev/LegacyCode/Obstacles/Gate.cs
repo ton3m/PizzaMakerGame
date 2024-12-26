@@ -1,104 +1,108 @@
+using PizzaMaker.LegacyCode.Core.Game;
 using TMPro;
 using UnityEngine;
 
-public class Gate : MonoBehaviour
+namespace PizzaMaker.LegacyCode.Obstacles
 {
-    private enum OperationType
+    public class Gate : MonoBehaviour
     {
-        Addition,
-        Difference,
-        Multiplication,
-        Division
-    }
-
-    [Header("Operation")]
-    [SerializeField] private OperationType gateOperation;
-    [SerializeField] private int value;
-
-    [Header("References")]
-    [SerializeField] private TextMeshPro operationText;
-    [SerializeField] private MeshRenderer forceField;
-    [SerializeField] private Material[] operationTypeMaterial;
-
-    [Header("SoundEffect")]
-    [SerializeField] private AudioSource positiveSound;
-    [SerializeField] private AudioSource negativeSound;
-
-    private string finalText = "";
-
-    private void Start()
-    {
-        RandomOperation();
-    }
-
-    private void RandomOperation()
-    {
-        if (gateOperation == OperationType.Addition)
+        private enum OperationType
         {
-            finalText += "+";
+            Addition,
+            Difference,
+            Multiplication,
+            Division
         }
-        if (gateOperation == OperationType.Difference)
-        {
-            finalText += "-";
-        }
-        if (gateOperation == OperationType.Multiplication)
-        {
-            finalText += "x";
-        }
-        if (gateOperation == OperationType.Division)
-        {
-            finalText += "÷";
-        }
-        finalText += value.ToString();
-        operationText.text = finalText;
 
-        if (gateOperation == OperationType.Addition || gateOperation == OperationType.Multiplication)
-        {
-            forceField.material = operationTypeMaterial[0];
-        }
-        else
-        {
-            forceField.material = operationTypeMaterial[1];
-        }
-    }
+        [Header("Operation")]
+        [SerializeField] private OperationType gateOperation;
+        [SerializeField] private int value;
 
-    public void ExecuteOperation()
-    {
-        int soundOn = PlayerPrefs.GetInt("Sound");
-        if (gateOperation == OperationType.Addition)
+        [Header("References")]
+        [SerializeField] private TextMeshPro operationText;
+        [SerializeField] private MeshRenderer forceField;
+        [SerializeField] private Material[] operationTypeMaterial;
+
+        [Header("SoundEffect")]
+        [SerializeField] private AudioSource positiveSound;
+        [SerializeField] private AudioSource negativeSound;
+
+        private string finalText = "";
+
+        private void Start()
         {
-            if (soundOn == 1)
+            RandomOperation();
+        }
+
+        private void RandomOperation()
+        {
+            if (gateOperation == OperationType.Addition)
             {
-                positiveSound.Play();
+                finalText += "+";
             }
-            GameManager.Instance.playerSize += value;
-        }
-        if (gateOperation == OperationType.Difference)
-        {
-            if (soundOn == 1)
+            if (gateOperation == OperationType.Difference)
             {
-                negativeSound.Play();
+                finalText += "-";
             }
-            GameManager.Instance.playerSize -= value;
-        }
-        if (gateOperation == OperationType.Multiplication)
-        {
-            if (soundOn == 1)
+            if (gateOperation == OperationType.Multiplication)
             {
-                positiveSound.Play();
+                finalText += "x";
             }
-            GameManager.Instance.playerSize *= value;
-        }
-        if (gateOperation == OperationType.Division)
-        {
-            if (soundOn == 1)
+            if (gateOperation == OperationType.Division)
             {
-                negativeSound.Play();
+                finalText += "ï¿½";
             }
-            GameManager.Instance.playerSize /= value;
+            finalText += value.ToString();
+            operationText.text = finalText;
+
+            if (gateOperation == OperationType.Addition || gateOperation == OperationType.Multiplication)
+            {
+                forceField.material = operationTypeMaterial[0];
+            }
+            else
+            {
+                forceField.material = operationTypeMaterial[1];
+            }
         }
 
-        GetComponent<BoxCollider>().enabled = false;
-        forceField.gameObject.SetActive(false);
+        public void ExecuteOperation()
+        {
+            int soundOn = PlayerPrefs.GetInt("Sound");
+            if (gateOperation == OperationType.Addition)
+            {
+                if (soundOn == 1)
+                {
+                    positiveSound.Play();
+                }
+                GameManager.Instance.playerSize += value;
+            }
+            if (gateOperation == OperationType.Difference)
+            {
+                if (soundOn == 1)
+                {
+                    negativeSound.Play();
+                }
+                GameManager.Instance.playerSize -= value;
+            }
+            if (gateOperation == OperationType.Multiplication)
+            {
+                if (soundOn == 1)
+                {
+                    positiveSound.Play();
+                }
+                GameManager.Instance.playerSize *= value;
+            }
+            if (gateOperation == OperationType.Division)
+            {
+                if (soundOn == 1)
+                {
+                    negativeSound.Play();
+                }
+                GameManager.Instance.playerSize /= value;
+            }
+
+            GetComponent<BoxCollider>().enabled = false;
+            forceField.gameObject.SetActive(false);
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using PizzaMaker.Code.Core;
-
-namespace PizzaMaker.Code.Core.Ingredients.Abstraction
+﻿namespace PizzaMaker.Code.Core.Ingredients.Inventory.Abstraction
 {
     public interface IIngredientsCollector
     {

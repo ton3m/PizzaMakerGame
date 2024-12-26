@@ -1,73 +1,78 @@
-﻿using TMPro;
+﻿using PizzaMaker.LegacyCode.Core.Game;
+using PizzaMaker.LegacyCode.VFX;
+using TMPro;
 using UnityEngine;
 
-public class Block : MonoBehaviour
+namespace PizzaMaker.LegacyCode.Obstacles
 {
-    [Header("Size & Color")]
-    [SerializeField] private int startingSize;
-    [SerializeField] private Material[] blockColor;
-    [SerializeField] private MeshRenderer blockMesh;
-
-    [Header("References")]
-    [SerializeField] private GameObject completeBlock;
-    [SerializeField] private GameObject brokenBlock;
-    [SerializeField] private TextMeshPro blockSizeText;
-
-    [Header("SoundEffect")]
-    [SerializeField] private AudioSource breakSound;
-    [SerializeField] private AudioSource deathSound;
-
-    private void Start()
+    public class Block : MonoBehaviour
     {
-        completeBlock.SetActive(true);
-        brokenBlock.SetActive(false);
-        blockSizeText.text = startingSize.ToString();
-        RandomColor();
-    }
+        [Header("Size & Color")]
+        [SerializeField] private int startingSize;
+        [SerializeField] private Material[] blockColor;
+        [SerializeField] private MeshRenderer blockMesh;
 
-    private void RandomColor()
-    {
-        int colorIndex = (startingSize - 1) / 3;
-        colorIndex = Mathf.Clamp(colorIndex, 0, blockColor.Length - 1);
-        blockMesh.material = blockColor[colorIndex];
-    }
+        [Header("References")]
+        [SerializeField] private GameObject completeBlock;
+        [SerializeField] private GameObject brokenBlock;
+        [SerializeField] private TextMeshPro blockSizeText;
 
-    public void CheckHit()
-    {
-        int vibrateOn = PlayerPrefs.GetInt("Vibrate");
-        int soundOn = PlayerPrefs.GetInt("Sound");
-        if (vibrateOn == 1)
+        [Header("SoundEffect")]
+        [SerializeField] private AudioSource breakSound;
+        [SerializeField] private AudioSource deathSound;
+
+        private void Start()
         {
-            Handheld.Vibrate();
+            completeBlock.SetActive(true);
+            brokenBlock.SetActive(false);
+            blockSizeText.text = startingSize.ToString();
+            RandomColor();
         }
 
-        if (GameManager.Instance.playerSize > startingSize)
+        private void RandomColor()
         {
-            ParticleManager.Instance.PlayParticle(0, transform.position);
-            GameManager.Instance.playerSize -= startingSize;
-            completeBlock.SetActive(false);
-            brokenBlock.SetActive(true);
-            foreach (Transform childTransform in brokenBlock.transform)
+            int colorIndex = (startingSize - 1) / 3;
+            colorIndex = Mathf.Clamp(colorIndex, 0, blockColor.Length - 1);
+            blockMesh.material = blockColor[colorIndex];
+        }
+
+        public void CheckHit()
+        {
+            int vibrateOn = PlayerPrefs.GetInt("Vibrate");
+            int soundOn = PlayerPrefs.GetInt("Sound");
+            if (vibrateOn == 1)
             {
-                Renderer childRenderer = childTransform.GetComponent<Renderer>();
-                if (childRenderer != null)
+                Handheld.Vibrate();
+            }
+
+            if (GameManager.Instance.playerSize > startingSize)
+            {
+                ParticleManager.Instance.PlayParticle(0, transform.position);
+                GameManager.Instance.playerSize -= startingSize;
+                completeBlock.SetActive(false);
+                brokenBlock.SetActive(true);
+                foreach (Transform childTransform in brokenBlock.transform)
                 {
-                    childRenderer.material = blockMesh.material;
+                    Renderer childRenderer = childTransform.GetComponent<Renderer>();
+                    if (childRenderer != null)
+                    {
+                        childRenderer.material = blockMesh.material;
+                    }
+                }
+                blockSizeText.gameObject.SetActive(false);
+                if (soundOn == 1)
+                {
+                    breakSound.Play();
                 }
             }
-            blockSizeText.gameObject.SetActive(false);
-            if (soundOn == 1)
+            else
             {
-                breakSound.Play();
+                if (soundOn == 1)
+                {
+                    deathSound.Play();
+                }
+                GameManager.Instance.gameLost = true;
             }
-        }
-        else
-        {
-            if (soundOn == 1)
-            {
-                deathSound.Play();
-            }
-            GameManager.Instance.gameLost = true;
         }
     }
 }

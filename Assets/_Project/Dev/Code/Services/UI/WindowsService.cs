@@ -19,7 +19,13 @@ namespace PizzaMaker.Code.Services.UI
             if (_windows.TryGetValue(id, out GameObject window) == false) 
                 throw new ArgumentException($"Window with id {id} not registered.");
         
-            window.SetActive(window);
+            window.SetActive(true);
+        }
+        
+        public void CloseAll()
+        {
+            foreach (GameObject window in _windows.Values)
+                window.SetActive(false);
         }
     }
 }

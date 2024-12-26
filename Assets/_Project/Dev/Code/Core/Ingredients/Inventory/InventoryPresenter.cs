@@ -1,7 +1,7 @@
 ﻿using System;
-using PizzaMaker.Code.Core.Ingredients.Abstraction;
+using PizzaMaker.Code.Core.Ingredients.Inventory.Abstraction;
 
-namespace PizzaMaker.Code.Core.Ingredients
+namespace PizzaMaker.Code.Core.Ingredients.Inventory
 {
     public class InventoryPresenter : IDisposable
     {

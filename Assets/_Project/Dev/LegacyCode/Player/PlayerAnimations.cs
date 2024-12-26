@@ -1,32 +1,36 @@
+using PizzaMaker.LegacyCode.Core.Game;
 using UnityEngine;
 
-public class PlayerAnimations : MonoBehaviour
+namespace PizzaMaker.LegacyCode.Player
 {
-    private Animator animator;
-
-    private void Start()
+    public class PlayerAnimations : MonoBehaviour
     {
-        animator = GetComponent<Animator>();
-    }
+        private Animator animator;
 
-    private void Update()
-    {
-        UpdateAnimation();
-    }
-
-    private void UpdateAnimation()
-    {
-        if (GameManager.Instance.gameStarted)
+        private void Start()
         {
-            animator.SetBool("run", GameManager.Instance.gameStarted);
+            animator = GetComponent<Animator>();
         }
-        if (GameManager.Instance.gameWon)
+
+        private void Update()
         {
-            animator.SetTrigger("win");
+            UpdateAnimation();
         }
-        if (GameManager.Instance.gameLost)
+
+        private void UpdateAnimation()
         {
-            animator.SetTrigger("die");
+            if (GameManager.Instance.gameStarted)
+            {
+                animator.SetBool("run", GameManager.Instance.gameStarted);
+            }
+            if (GameManager.Instance.gameWon)
+            {
+                animator.SetTrigger("win");
+            }
+            if (GameManager.Instance.gameLost)
+            {
+                animator.SetTrigger("die");
+            }
         }
     }
 }

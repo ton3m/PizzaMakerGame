@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using PizzaMaker.Code.Core;
-using PizzaMaker.Code.Core.Ingredients.Abstraction;
+using PizzaMaker.Code.Core.Ingredients.Inventory.Abstraction;
 using UnityEngine;
 
-namespace PizzaMaker.Code.Core.Ingredients
+namespace PizzaMaker.Code.Core.Ingredients.Inventory
 {
     public class Inventory : IInventory
     {

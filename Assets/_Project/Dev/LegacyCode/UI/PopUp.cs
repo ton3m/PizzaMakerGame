@@ -1,13 +1,16 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class PopUp : MonoBehaviour
+namespace PizzaMaker.LegacyCode.UI
 {
-    [SerializeField] private float delay;
-
-    private void Start()
+    public class PopUp : MonoBehaviour
     {
-        transform.localScale = Vector3.zero;
-        transform.DOScale(Vector3.one, 1).SetDelay(delay);
+        [SerializeField] private float delay;
+
+        private void Start()
+        {
+            transform.localScale = Vector3.zero;
+            transform.DOScale(Vector3.one, 1).SetDelay(delay);
+        }
     }
 }

@@ -1,26 +1,40 @@
 ﻿using PizzaMaker.Code.Consts;
-using PizzaMaker.Code.Services;
-using PizzaMaker.Code.Services.Scene;
+using PizzaMaker.Code.Entry.Bootstraps;
+using PizzaMaker.Code.Services.CoroutinePerformer;
+using PizzaMaker.Code.Services.Loaders;
+using PizzaMaker.Code.Services.LoadingCurtain;
+using PizzaMaker.Code.Services.Logging;
+using PizzaMaker.Code.Utils.DI;
 using UnityEngine;
 
 namespace PizzaMaker.Code.Entry
 {
     public class EntryPoint : MonoBehaviour
     {
-        [SerializeField] private Bootstrap _bootstrap;
+        private DIContainer _container;
 
         private void Awake()
         {
             SetupAppSettings();
+            
+           _container = new DIContainer();
+            
+            RegLogging();
+            RegCoroutinePerformer();
+            RegResourcesLoader();
+            RegLoadingCurtain();
+            
+            _container.Initialize();
+            
+            RunBootstrap();
+        }
 
-            DIContainer container = new();
-
-            RegResourcesAssetLoader(container);
-            RegCoroutinePerformer(container);
-            RegLoadingCurtain(container);
-            RegSceneLoader(container);
-
-            container.Resolve<ICoroutinePerformer>().StartPerform(_bootstrap.Run(container));
+        private void RunBootstrap()
+        {
+            var bootstrap = new Bootstrap();
+            var performer = _container.Resolve<ICoroutinePerformer>();
+            
+            performer.StartPerform(bootstrap.Run(_container));
         }
 
         private void SetupAppSettings()
@@ -28,39 +42,31 @@ namespace PizzaMaker.Code.Entry
             QualitySettings.vSyncCount = 0;
             Application.targetFrameRate = 60;
         }
+        
+        private void RegLogging() =>
+            _container.RegisterAsSingle(c => new UnityLogThread()).NonLazy();
 
-        private void RegSceneLoader(DIContainer container) =>
-            container.RegisterAsSingle<ISceneLoader>(c => new SceneLoader());
+        private void RegResourcesLoader() => 
+            _container.RegisterAsSingle(c => new ResourcesLoader());
 
-        private void RegLoadingCurtain(DIContainer container)
+        private void RegLoadingCurtain()
         {
-            container.RegisterAsSingle<ILoadingCurtain>(c =>
+            _container.RegisterAsSingle<ILoadingCurtain>(c =>
             {
-                var loader = c.Resolve<ResourcesAssetLoader>();
-
-                LoadingCurtain prefab = loader
-                    .LoadResource<LoadingCurtain>(ResourcesPaths.LoadingCurtain);
-
+                var loader = _container.Resolve<ResourcesLoader>();
+                LoadingCurtain prefab = loader.LoadResource<LoadingCurtain>(ResourcesPaths.LoadingCurtain);
                 return Instantiate(prefab);
             });
         }
 
-        private void RegCoroutinePerformer(DIContainer container)
+        private void RegCoroutinePerformer()
         {
-            container.RegisterAsSingle<ICoroutinePerformer>(c =>
+            _container.RegisterAsSingle<ICoroutinePerformer>(c =>
             {
-                var loader = c.Resolve<ResourcesAssetLoader>();
-
-                CoroutinePerformer prefab = loader
-                    .LoadResource<CoroutinePerformer>(ResourcesPaths.CoroutinePerformer);
-
+                var loader = _container.Resolve<ResourcesLoader>();
+                CoroutinePerformer prefab = loader.LoadResource<CoroutinePerformer>(ResourcesPaths.CoroutinePerformer);
                 return Instantiate(prefab);
             });
-        }
-
-        private void RegResourcesAssetLoader(DIContainer container)
-        {
-            container.RegisterAsSingle(c => new ResourcesAssetLoader());
         }
     }
 }

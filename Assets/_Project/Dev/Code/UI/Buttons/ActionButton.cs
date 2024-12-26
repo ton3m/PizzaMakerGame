@@ -1,33 +1,13 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
+using System;
 
 namespace PizzaMaker.Code.UI.Buttons
 {
-    [RequireComponent(typeof(Button))]
-    public abstract class ActionButton : MonoBehaviour
+    public abstract class ActionButton : OnClickedButton
     {
-        private UnityAction _onClicked;
-    
-        private Button _button;
+        private Action _onClicked;
 
-        private void Awake()
-        {
-            _onClicked = OnClicked;
-            _button = GetComponent<Button>();
-        }
+        public void Initialize(Action onClicked) => _onClicked = onClicked;
 
-        private void Start()
-        {
-            if (_onClicked == null)
-                throw new NullReferenceException(nameof(_onClicked));
-        
-            _button.onClick.AddListener(_onClicked);
-        }
-        
-        private void OnDestroy() => _button.onClick.RemoveAllListeners();
-        
-        protected abstract void OnClicked();
+        protected override void OnClicked() => _onClicked.Invoke();
     }
 }

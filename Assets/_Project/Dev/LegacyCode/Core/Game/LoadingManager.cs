@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadingManager : MonoBehaviour
+namespace PizzaMaker.LegacyCode.Core.Game
 {
-    /*[SerializeField] private GameObject*/
-    private void Awake()
+    public class LoadingManager : MonoBehaviour
     {
-        SceneManager.LoadScene(PlayerPrefs.GetInt("LoadingLevel", 1));
+        /*[SerializeField] private GameObject*/
+        private void Awake()
+        {
+            SceneManager.LoadScene(PlayerPrefs.GetInt("LoadingLevel", 1));
+        }
     }
 }

@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class PersistentObjects : MonoBehaviour
+namespace PizzaMaker.LegacyCode.Core
 {
-    private void Awake()
+    public class PersistentObjects : MonoBehaviour
     {
-        DontDestroyOnLoad(gameObject);
+        private void Awake()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }

@@ -1,13 +1,13 @@
-﻿using PizzaMaker.Code.Core;
-using PizzaMaker.Code.Core.Ingredients.Abstraction;
+﻿using PizzaMaker.Code.Core.Ingredients.Inventory.Abstraction;
 using UnityEngine;
 
-namespace PizzaMaker.Code.Core.Ingredients
+namespace PizzaMaker.Code.Core.Ingredients.Inventory
 {
     public class InventoryView : MonoBehaviour, IInventoryView
     {
-        private ViewsPull _viewsPull;
         [SerializeField] private Transform _attachPoint;
+     
+        private ViewsPull _viewsPull;
 
         public void Init(ViewsPull viewsPull)
         {
@@ -20,7 +20,6 @@ namespace PizzaMaker.Code.Core.Ingredients
             
             ingredient.transform.parent = _attachPoint;
 
-            //ingredient.transform.localScale *= 0.5f;
             var scale = ingredient.transform.localScale;
             
             scale.x *= 2;
@@ -29,7 +28,7 @@ namespace PizzaMaker.Code.Core.Ingredients
             
             ingredient.transform.localScale = scale;
             
-            float height = (count-1) * 0.1f;
+            float height = (count-1) * 0.5f;
             ingredient.transform.position = _attachPoint.position + Vector3.up * height;
 
             ingredient.gameObject.SetActive(true);
