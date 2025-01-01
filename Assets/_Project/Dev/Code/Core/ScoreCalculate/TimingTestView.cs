@@ -15,7 +15,7 @@ namespace PizzaMaker
         public float NormalizedPosition { get; private set; }
 
         private float _trackWidth => _track.rect.width / 2;
-
+        
         void Start()
         {
             _indicator = GetComponent<RectTransform>();
@@ -24,10 +24,7 @@ namespace PizzaMaker
         void Update()
         {
             MoveIndicator();
-            if(Input.GetMouseButtonDown(0))
-            {
-                IndicatorStop();
-            }
+            IndicatorStop();
         }
 
         private void IndicatorStop()
@@ -35,10 +32,10 @@ namespace PizzaMaker
             if (Input.GetMouseButtonDown(0))
             {
                 NormalizedPosition = _indicator.anchoredPosition.x / Mathf.Abs(_track.rect.width / 2);
+                //_indicatorSpeed = 0;
                 
                 IndicatorStoped?.Invoke();
             }
-            //TODO:остановка индикатора
         }
 
         private void MoveIndicator()

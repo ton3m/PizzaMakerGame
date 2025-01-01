@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using PizzaMaker.Code.Core;
 using PizzaMaker.Code.Core.Ingredients;
 using PizzaMaker.Code.Core.Ingredients.Abstraction;
+using PizzaMaker.Code.Core.Upgrade;
 using PizzaMaker.Code.Services.GameFinishDetector;
 using PizzaMaker.Code.Services.Scene;
 using PizzaMaker.Code.Services.UI;
@@ -66,6 +67,9 @@ namespace PizzaMaker.Code.Entry
             _uiEvents.GameplayStateEntered += OnGameplayStarted;
             _uiEvents.FinishStateEntered += OnGameplayEnded;
 
+            RegScoreCalculate();
+            RegLevelChange();
+            
             Debug.Log("Level bootstrap finished.");
 
             yield break;
@@ -129,6 +133,22 @@ namespace PizzaMaker.Code.Entry
             
 
             timingTest.IndicatorStoped += scoreCalculating.OnIndicatorStop;
+        }
+
+        private void RegLevelChange()
+        {
+            var ovenModel = CreateOvenUpgrade();
+
+
+            ovenModel.LevelUpgraded += () => _container.Resolve<ScoreCalculating>().OnLevelUpgraded();
+        }
+
+        private OvenUpgradePresenter CreateOvenUpgrade()
+        {
+            var ovenModel = new OvenUpgradeModel();
+            var ovenView = FindAnyObjectByType<OvenUpgradeView>();
+            var ovenPresenter = new OvenUpgradePresenter(ovenModel, ovenView);
+            return ovenPresenter;
         }
     }
 }
