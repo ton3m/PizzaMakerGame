@@ -2,14 +2,14 @@
 
 namespace PizzaMaker.Code.Core.Upgrade
 {
-    public class OvenUpgradePresenter :IDisposable
+    public class DoughUpgratePresenter :IDisposable
     {
         public event Action LevelUpgraded;
         
         private readonly IUpgradeble _model;
         private readonly IUpgradeView  _view;
 
-        public OvenUpgradePresenter(IUpgradeble model, IUpgradeView view)
+        public DoughUpgratePresenter(IUpgradeble model, IUpgradeView view)
         {
             _model = model;
             _view = view;
@@ -47,4 +47,4 @@ namespace PizzaMaker.Code.Core.Upgrade
 
         
     }
-}
+} 

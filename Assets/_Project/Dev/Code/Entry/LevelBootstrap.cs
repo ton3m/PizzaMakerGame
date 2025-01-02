@@ -137,18 +137,26 @@ namespace PizzaMaker.Code.Entry
 
         private void RegLevelChange()
         {
-            var ovenModel = CreateOvenUpgrade();
+            var ovenPresenter = CreateOvenUpgrade(); 
+            var doughPresenter = CreateDoughUpgrade();
 
-
-            ovenModel.LevelUpgraded += () => _container.Resolve<ScoreCalculating>().OnLevelUpgraded();
+            ovenPresenter.LevelUpgraded += () => _container.Resolve<ScoreCalculating>().OnLevelUpgraded();
+            doughPresenter.LevelUpgraded += () => _container.Resolve<ScoreCalculating>().OnLevelUpgraded();
         }
-
+        
         private OvenUpgradePresenter CreateOvenUpgrade()
         {
             var ovenModel = new OvenUpgradeModel();
             var ovenView = FindAnyObjectByType<OvenUpgradeView>();
             var ovenPresenter = new OvenUpgradePresenter(ovenModel, ovenView);
             return ovenPresenter;
+        }
+        private DoughUpgratePresenter CreateDoughUpgrade()
+        {
+            var doughModel = new DoughUpgradeModel();
+            var doughView = FindAnyObjectByType<DoughUpgradeView>();
+            var doughPresenter = new DoughUpgratePresenter(doughModel, doughView);
+            return doughPresenter;
         }
     }
 }
