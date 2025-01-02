@@ -17,7 +17,7 @@ namespace PizzaMaker.Code.Core.Upgrade
             UpdateView();
         }
 
-        public virtual event Action LevelUpgraded;
+        public event Action LevelUpgraded;
 
         public void Dispose()
         {

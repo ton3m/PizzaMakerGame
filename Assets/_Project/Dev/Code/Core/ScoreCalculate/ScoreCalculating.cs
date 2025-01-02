@@ -6,8 +6,7 @@ namespace PizzaMaker
 {
     public class ScoreCalculating
     {
-        private  OvenUpgradeModel _ovenUpgradeModel;
-        private DoughUpgradeModel _doughUpgradeModel;
+        private UpgradeModel upgradeModel;
         
         private readonly Func<float> _normalizedPosition;
         public float TotalScore { get; private set; }
@@ -31,7 +30,7 @@ namespace PizzaMaker
         public void OnLevelUpgraded()
         {
             _ovenMultiplier = _ovenUpgradeModel.Multiplier;
-            _douthMultiplier = _doughUpgradeModel.Multiplier;
+            _douthMultiplier = upgradeModel.Multiplier;
         }
         
         public void OnIndicatorStop()
