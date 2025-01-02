@@ -19,7 +19,7 @@ namespace PizzaMaker.Code.Entry
                 var sceneLoader = new SceneLoader();
 
                 sceneLoader.Load(SceneId.Empty);
-                sceneLoader.Load(SceneId.Bootstrap);
+                sceneLoader.Load(config.StartScene);
             }
         }
     }

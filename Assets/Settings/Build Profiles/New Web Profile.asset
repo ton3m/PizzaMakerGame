@@ -23,6 +23,8 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/_Project/Scenes/Bootstrap.unity
   - m_enabled: 1
+    m_path: Assets/_Project/Scenes/Test/Gameplay.unity
+  - m_enabled: 1
     m_path: Assets/_Project/Scenes/Empty.unity
   - m_enabled: 1
     m_path: Assets/_Project/Scenes/Gameplay.unity
