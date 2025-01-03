@@ -2,7 +2,7 @@
 
 namespace PizzaMaker.Code.Core.Upgrade
 {
-    public abstract class UpgradePresenter : IDisposable
+    public class UpgradePresenter : IDisposable
     {
         private IUpgradeble _model;
         private IUpgradeView  _view;

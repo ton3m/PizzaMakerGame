@@ -67,6 +67,7 @@ namespace PizzaMaker.Code.Entry
             _uiEvents.GameplayStateEntered += OnGameplayStarted;
             _uiEvents.FinishStateEntered += OnGameplayEnded;
 
+            RegUpgradeMvpFactory();
             RegScoreCalculate();
             RegLevelChange();
             
@@ -124,39 +125,30 @@ namespace PizzaMaker.Code.Entry
             });
         }
 
+        private void RegUpgradeMvpFactory()
+        {
+            _container.RegisterAsSingle(container => new UpgradeMvpFactory() );
+        }
         private void RegScoreCalculate()
         {
+            UpgradeMvpFactory upgradeMvpFactory = new();
+            
+            UpgradeModel ovenUpgradeModel = upgradeMvpFactory.CreateOvenUpgradeModel(1f, 100f, 1.1f, 1.2f);
+            UpgradeModel doughUpgradeModel = upgradeMvpFactory.CreateDoughUpgradeModel(1f, 120f, 1.2f, 1.4f);
+            
             var timingTest = FindAnyObjectByType<TimingTestView>();
-            _container.RegisterAsSingle(c => new ScoreCalculating(() => timingTest.NormalizedPosition));
+            _container.RegisterAsSingle(c => new ScoreCalculating(() => timingTest.NormalizedPosition, ovenUpgradeModel, doughUpgradeModel));
             
             var scoreCalculating = _container.Resolve<ScoreCalculating>();
-            
 
             timingTest.IndicatorStoped += scoreCalculating.OnIndicatorStop;
         }
 
         private void RegLevelChange()
         {
-            var ovenPresenter = CreateOvenUpgrade(); 
-            var doughPresenter = CreateDoughUpgrade();
-
-            ovenPresenter.LevelUpgraded += () => _container.Resolve<ScoreCalculating>().OnLevelUpgraded();
-            doughPresenter.LevelUpgraded += () => _container.Resolve<ScoreCalculating>().OnLevelUpgraded();
-        }
-        
-        private UpgradePresenter CreateOvenUpgrade()
-        {
-            var ovenModel = new OvenUpgradeModel();
-            var ovenView = FindAnyObjectByType<OvenUpgradeView>();
-            var ovenPresenter = new OvenUpgradePresenter(ovenModel, ovenView);
-            return ovenPresenter;
-        }
-        private DoughUpgradePresenter CreateDoughUpgrade()
-        {
-            var doughModel = new UpgradeModel(1f, 100f, 1.1f, 1.4f);
-            var doughView = FindAnyObjectByType<DoughUpgradeView>();
-            var doughPresenter = new DoughUpgradePresenter(doughModel, doughView);
-            return doughPresenter;
+            var upgradeMvpFactory = _container.Resolve<UpgradeMvpFactory>();
+            upgradeMvpFactory.OvenUpgradePresenter.LevelUpgraded += () => _container.Resolve<ScoreCalculating>().OnLevelUpgraded();
+            upgradeMvpFactory.DoughUpgradePresenter.LevelUpgraded += () => _container.Resolve<ScoreCalculating>().OnLevelUpgraded();
         }
     }
 }
