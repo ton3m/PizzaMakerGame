@@ -13,6 +13,8 @@ namespace PizzaMaker.Code.Services.Logging
             _instance = this;
         }
 
+        public static IThread Instance => _instance;
+        
         public void SetActive(bool active) => _enabled = active;
 
         public static IThread NewChild(string id)

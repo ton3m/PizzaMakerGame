@@ -13,7 +13,7 @@ namespace PizzaMaker.Code.Services.Observers
 
         public FinishLinePassedObserver(ICollisionDetector detector)
         {
-            var entered = detector.Enter;
+            var entered = detector.TriggerEntered;
 
             _disposable = entered
                 .Where(collider => collider.gameObject.GetComponent<FinishLine>() != null)

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1dd9dfaa1514552a801d0e52aefc57c, type: 3}
   m_Name: GameLaunchConfig
   m_EditorClassIdentifier: 
-  StartScene: 100
+  _targetScene:
+    SelectedScene: GameplayTest
   StartFromBootstrapScene: 1

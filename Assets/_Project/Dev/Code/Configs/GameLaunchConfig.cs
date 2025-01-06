@@ -1,4 +1,4 @@
-using PizzaMaker.Code.Services.Loaders.Scene;
+using PizzaMaker.Code.Utils.ScenePicker;
 using UnityEngine;
 
 namespace PizzaMaker.Code.Configs
@@ -6,7 +6,9 @@ namespace PizzaMaker.Code.Configs
     [CreateAssetMenu(menuName = "Configs/Game Launch Config", fileName = "GameLaunchConfig")]
     public class GameLaunchConfig : ScriptableObject
     {
-        public SceneId StartScene = SceneId.Gameplay;
+        [SerializeField] private ScenePickerField _targetScene;
+        
+        public string TargetScene => _targetScene.SelectedScene;
         public bool StartFromBootstrapScene = true;
     }
 }

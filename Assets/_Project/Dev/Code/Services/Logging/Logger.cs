@@ -9,8 +9,7 @@ namespace PizzaMaker.Code.Services.Logging
         private readonly IThread _thread;
 
         public Logger(IThread thread) => _thread = thread;
-
-
+        
         public ILogger SetActive(bool isActive)
         {
             _enabled = isActive;

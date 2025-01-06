@@ -2,6 +2,8 @@
 using PizzaMaker.Code.Entry.Bootstraps;
 using PizzaMaker.Code.Services.CoroutinePerformer;
 using PizzaMaker.Code.Services.Loaders;
+using PizzaMaker.Code.Services.Loaders.Scene;
+using PizzaMaker.Code.Services.Loaders.Scene.PizzaMaker.Code.Services.Loaders.Scene;
 using PizzaMaker.Code.Services.LoadingCurtain;
 using PizzaMaker.Code.Services.Logging;
 using PizzaMaker.Code.Utils.DI;
@@ -21,7 +23,9 @@ namespace PizzaMaker.Code.Entry
             
             RegLogging();
             RegCoroutinePerformer();
+
             RegResourcesLoader();
+            RegSceneLoader();
             RegLoadingCurtain();
             
             _container.Initialize();
@@ -48,6 +52,9 @@ namespace PizzaMaker.Code.Entry
 
         private void RegResourcesLoader() => 
             _container.RegisterAsSingle(c => new ResourcesLoader());
+
+        private void RegSceneLoader() =>
+            _container.RegisterAsSingle<ISceneLoader>(c => new SceneLoader());
 
         private void RegLoadingCurtain()
         {

@@ -5,7 +5,10 @@ namespace PizzaMaker.Code.Core.Collision
 {
     public interface ICollisionDetector
     {
-        IObservable<Collider> Enter { get; }
-        IObservable<Collider> Exit { get; }
+        IObservable<Collider> TriggerEntered { get; }
+        IObservable<Collider> TriggerLeft { get; }
+        
+        IObservable<UnityEngine.Collision> CollisionEntered { get; }
+        IObservable<UnityEngine.Collision> CollisionLeft { get; }
     }
 }

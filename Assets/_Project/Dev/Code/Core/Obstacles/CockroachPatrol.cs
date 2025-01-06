@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PizzaMaker
+namespace PizzaMaker.Code.Core.Obstacles
 {
     public class CockroachPatrol: MonoBehaviour
     {

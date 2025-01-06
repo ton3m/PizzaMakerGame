@@ -1,7 +1,7 @@
 ﻿using PathCreation;
 using UnityEngine;
 
-namespace PizzaMaker.Code.Core.Movement
+namespace PizzaMaker.Code.Core.Character.Movement
 {
     public class PathFollower : MonoBehaviour
     {

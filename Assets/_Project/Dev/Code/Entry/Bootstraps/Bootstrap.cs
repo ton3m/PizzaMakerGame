@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using PizzaMaker.Code.Configs;
+using PizzaMaker.Code.Consts;
+using PizzaMaker.Code.Services.Loaders;
 using PizzaMaker.Code.Services.Loaders.Scene;
 using PizzaMaker.Code.Services.LoadingCurtain;
 using PizzaMaker.Code.Services.Logging;
+using PizzaMaker.Code.Services.SceneLauncher;
 using PizzaMaker.Code.Utils.DI;
 using ILogger = PizzaMaker.Code.Services.Logging.ILogger;
 using Logger = PizzaMaker.Code.Services.Logging.Logger;
@@ -20,15 +23,27 @@ namespace PizzaMaker.Code.Entry.Bootstraps
             OnLoadingStarted(container);
 
             _container = container;
-            
-            RegSceneLoader();
+
+
+            RegSceneSwitcher();
+            RegGameLaunchConfig();
             RegGameConfig();
 
             _container.Initialize();
 
             OnLoadingFinished();
-            
-            yield return RunGameplayBootstrap();
+
+            yield return EnterNextState();
+        }
+
+        private void RegSceneSwitcher() =>
+            _container.RegisterAsSingle(c => new SceneLauncher(c.Resolve<ISceneLoader>()));
+
+        private void RegGameLaunchConfig()
+        {
+            _container.RegisterAsSingle(c =>
+                c.Resolve<ResourcesLoader>()
+                    .LoadResource<GameLaunchConfig>(ResourcesPaths.GameLaunchConfig));
         }
 
         private void OnLoadingStarted(DIContainer container)
@@ -45,18 +60,17 @@ namespace PizzaMaker.Code.Entry.Bootstraps
             _container.Resolve<ILoadingCurtain>().Hide();
         }
 
-        private IEnumerator RunGameplayBootstrap()
+        private IEnumerator EnterNextState()
         {
-            var bootstrap = new GameplayBootstrap();
-            var container = new DIContainer(_container);
-            
-            yield return bootstrap.Run(container);
+            var sceneSwitcher = _container.Resolve<SceneLauncher>();
+            var targetScene = _container.Resolve<GameLaunchConfig>().TargetScene;
+
+            var subContainer = new DIContainer(_container);
+
+            yield return sceneSwitcher.LaunchScene(targetScene, subContainer);
         }
         
         private void RegGameConfig() =>
             _container.RegisterAsSingle(c => new GameConfig());
-
-        private void RegSceneLoader() =>
-            _container.RegisterAsSingle<ISceneLoader>(c => new SceneLoader());
     }
 }

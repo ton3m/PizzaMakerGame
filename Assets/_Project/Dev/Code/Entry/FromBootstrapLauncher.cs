@@ -2,6 +2,7 @@ using PizzaMaker.Code.Configs;
 using PizzaMaker.Code.Consts;
 using PizzaMaker.Code.Services.Loaders;
 using PizzaMaker.Code.Services.Loaders.Scene;
+using PizzaMaker.Code.Services.Loaders.Scene.PizzaMaker.Code.Services.Loaders.Scene;
 using UnityEngine;
 
 namespace PizzaMaker.Code.Entry
@@ -17,9 +18,9 @@ namespace PizzaMaker.Code.Entry
             if (config.StartFromBootstrapScene)
             {
                 var sceneLoader = new SceneLoader();
-
+                
                 sceneLoader.Load(SceneId.Empty);
-                sceneLoader.Load(config.StartScene);
+                sceneLoader.Load(SceneId.Bootstrap);
             }
         }
     }

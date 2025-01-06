@@ -1,10 +1,10 @@
 using PathCreation;
+using PizzaMaker.Code.Core.Character.Movement;
 using PizzaMaker.Code.Core.Collision;
 using PizzaMaker.Code.Core.Health;
 using PizzaMaker.Code.Core.Ingredients;
 using PizzaMaker.Code.Core.Ingredients.Inventory;
 using PizzaMaker.Code.Core.Ingredients.Inventory.Abstraction;
-using PizzaMaker.Code.Core.Movement;
 using PizzaMaker.Code.Utils.Reactive;
 using PizzaMaker.Code.Utils.Reactive.Disposing;
 using UnityEngine;
@@ -15,7 +15,7 @@ namespace PizzaMaker.Code.Core.Installers
     {
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private PathFollower _pathFollower;
-        [SerializeField] private SideMovement _sideMovement;
+        [SerializeField] private Character.Movement.SideMovement _sideMovement;
         [SerializeField] private CollisionDetector _collisionDetector;
 
         private IHealth _health;
@@ -34,7 +34,7 @@ namespace PizzaMaker.Code.Core.Installers
 
             InitInventory();
 
-            _collisionDetector.Enter.Subscribe(HandleCollision).DisposeIn(_disposer);
+            _collisionDetector.TriggerEntered.Subscribe(HandleCollision).DisposeIn(_disposer);
 
             return this;
         }
