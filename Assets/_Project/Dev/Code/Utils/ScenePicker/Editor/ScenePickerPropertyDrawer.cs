@@ -6,7 +6,7 @@ using UnityEngine;
 namespace PizzaMaker.Dev.Code.Utils.ScenePicker.Editor
 {
     [CustomPropertyDrawer(typeof(ScenePickerField))]
-    public class ScenePickerFieldDrawer : PropertyDrawer
+    public class ScenePickerPropertyDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {

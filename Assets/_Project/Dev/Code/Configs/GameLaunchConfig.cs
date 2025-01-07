@@ -7,8 +7,10 @@ namespace PizzaMaker.Code.Configs
     public class GameLaunchConfig : ScriptableObject
     {
         [SerializeField] private ScenePickerField _targetScene;
+        [SerializeField] private bool _startFromBootstrapScene = true;
+        [SerializeField] private AddSceneToBuildButton _addButton;
         
         public string TargetScene => _targetScene.SelectedScene;
-        public bool StartFromBootstrapScene = true;
+        public bool StartFromBootstrapScene => _startFromBootstrapScene;
     }
 }

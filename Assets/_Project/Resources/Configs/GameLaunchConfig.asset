@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GameLaunchConfig
   m_EditorClassIdentifier: 
   _targetScene:
-    SelectedScene: GameplayTest
-  StartFromBootstrapScene: 1
+    SelectedScene: Timing test
+  _startFromBootstrapScene: 1

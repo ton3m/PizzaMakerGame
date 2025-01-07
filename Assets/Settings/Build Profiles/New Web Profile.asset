@@ -30,6 +30,8 @@ MonoBehaviour:
     m_path: Assets/_Project/Scenes/Test/GameplayTest.unity
   - m_enabled: 1
     m_path: Assets/_Project/Scenes/Level1.unity
+  - m_enabled: 1
+    m_path: Assets/_Project/Scenes/Timing test.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings: []
