@@ -13,6 +13,7 @@ namespace PizzaMaker.Code.Entry
         {
             _container = container;
             
+            RegMoneyService();
             RegUpgradeMvpFactory();
             RegScoreCalculate();
             RegLevelChange();
@@ -21,7 +22,11 @@ namespace PizzaMaker.Code.Entry
             
             yield return null;
         }
-        
+
+        private void RegMoneyService()
+        {
+            _container.RegisterSingle(container => new MoneyService());
+        }
         private void RegUpgradeMvpFactory()
         {
             _container.RegisterAsSingle(container => new UpgradeMvpFactory() );
@@ -30,6 +35,8 @@ namespace PizzaMaker.Code.Entry
         private void RegScoreCalculate()
         {
             UpgradeMvpFactory upgradeMvpFactory = _container.Resolve<UpgradeMvpFactory>();
+            
+            upgradeMvpFactory.MoneyService = _container.Resolve<MoneyService>();
             
             UpgradeModel ovenUpgradeModel = upgradeMvpFactory.CreateOvenUpgradeModel(1f, 100f, 1.1f, 1.2f);
             UpgradeModel doughUpgradeModel = upgradeMvpFactory.CreateDoughUpgradeModel(1f, 120f, 1.2f, 1.4f);
