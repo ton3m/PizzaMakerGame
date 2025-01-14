@@ -46,7 +46,7 @@ namespace PizzaMaker.Code.Core.ScoreCalculate
 
         public void TimingTestScoreCalculate(float normalizedPosition)
         {
-            _timingTestScore = (1 - Mathf.Abs(normalizedPosition)) * 100* _ovenMultiplier;
+            _timingTestScore = (1 - Mathf.Abs(normalizedPosition)) * 100 * _ovenMultiplier;
             Debug.Log($"Timing test score: {_timingTestScore}");
         }
         
