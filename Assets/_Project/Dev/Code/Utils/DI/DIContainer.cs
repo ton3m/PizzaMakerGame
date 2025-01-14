@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using PizzaMaker.Code.Utils.Reactive;
 
 namespace PizzaMaker.Code.Utils.DI
 {
     public class DIContainer : IDisposable
     {
+        private Event _initialized = new();
+        
         private readonly Dictionary<Type, Registration> _container = new();
 
         private readonly DIContainer _parent;
@@ -17,6 +21,8 @@ namespace PizzaMaker.Code.Utils.DI
 
         public DIContainer(DIContainer parent) => _parent = parent;
 
+        public IObservable Initialized => _initialized;
+        
         public Registration RegisterAsSingle<T>(Func<DIContainer, T> creator)
         {
             if (IsAlreadyRegister<T>())
@@ -60,7 +66,7 @@ namespace PizzaMaker.Code.Utils.DI
 
         public void Initialize()
         {
-            foreach (Registration registration in _container.Values)
+            foreach (Registration registration in _container.Values.ToList())
             {
                 if (registration.Instance == null && registration.IsNonLazy)
                     registration.Instance = registration.Creator(this);
@@ -69,6 +75,8 @@ namespace PizzaMaker.Code.Utils.DI
                     if (registration.Instance is IInitializable initializable)
                         initializable.Initialize();
             }
+            
+            _initialized.Notify();
         }
 
         public void Dispose()

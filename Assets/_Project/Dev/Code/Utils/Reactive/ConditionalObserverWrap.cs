@@ -2,21 +2,21 @@ using System;
 
 namespace PizzaMaker.Code.Utils.Reactive
 {
-    public class ConditionalObserverWrap<T> : Main.Abstraction.IObserver<T>
+    public class ConditionalObserverWrap<T> : IObserver<T>
     {
-        private readonly Main.Abstraction.IObserver<T> _observer;
-        private readonly Func<T, T, bool> _notifyCondition;
-        
-        public ConditionalObserverWrap(Main.Abstraction.IObserver<T> observer, Func<T, T, bool> notifyCondition)
+        private readonly IObserver<T> _observer;
+        private readonly Func<T, bool> _notifyCondition;
+
+        public ConditionalObserverWrap(IObserver<T> observer, Func<T, bool> notifyCondition)
         {
             _observer = observer;
             _notifyCondition = notifyCondition;
         }
 
-        public void Notify(T previous, T current)
+        public void Notify(T value)
         {
-            if (_notifyCondition(previous, current))
-                _observer.Notify(previous, current);
+            if (_notifyCondition(value))
+                _observer.Notify(value);
         }
     }
 }

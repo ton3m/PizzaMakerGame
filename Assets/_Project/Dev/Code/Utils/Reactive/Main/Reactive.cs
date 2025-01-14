@@ -1,8 +1,8 @@
 using System;
 
-namespace PizzaMaker.Code.Utils.Reactive.Main
+namespace PizzaMaker.Code.Utils.Reactive
 {
-    public class Reactive<T> : Abstraction.IObservable<T>, IReadOnlyReactive<T>
+    public class Reactive<T> : IObservable<T>, IReadOnlyReactive<T>
     {
         private T _value;
 
@@ -10,13 +10,14 @@ namespace PizzaMaker.Code.Utils.Reactive.Main
 
         private readonly Subject<T> _subject = new();
         
-        public Reactive(Func<T, T, bool> valueChangedCondition)
+        public Reactive(Func<T, T, bool> valueChangedCondition, T value = default)
         {
             _valueChangedCondition = valueChangedCondition;
+            _value = value;
         }
 
-        public Reactive() :
-            this((previous, current) => current.Equals(previous) == false)
+        public Reactive(T value = default) :
+            this((previous, current) => current.Equals(previous) == false, value)
         {
         }
 
@@ -30,10 +31,10 @@ namespace PizzaMaker.Code.Utils.Reactive.Main
                 _value = value;
 
                 if (_valueChangedCondition(oldValue, _value))
-                    _subject.Notify(oldValue, _value);
+                    _subject.Notify(_value);
             }
         }
 
-        public IDisposable Subscribe(Abstraction.IObserver<T> observer) => _subject.Subscribe(observer);
+        public IDisposable Subscribe(IObserver<T> observer) => _subject.Subscribe(observer);
     }
 }

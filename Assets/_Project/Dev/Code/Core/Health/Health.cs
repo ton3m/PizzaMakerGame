@@ -1,5 +1,5 @@
 ﻿using System;
-using PizzaMaker.Code.Utils.Reactive.Main;
+using PizzaMaker.Code.Utils.Reactive;
 using UnityEngine;
 
 namespace PizzaMaker.Code.Core.Health

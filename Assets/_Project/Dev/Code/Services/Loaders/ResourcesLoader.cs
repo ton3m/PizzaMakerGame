@@ -4,7 +4,7 @@ namespace PizzaMaker.Code.Services.Loaders
 {
     public class ResourcesLoader 
     {
-        public T LoadResource<T>(string path) where T : Object
+        public T Load<T>(string path) where T : Object
         {
             T resource = Resources.Load<T>(path);
             

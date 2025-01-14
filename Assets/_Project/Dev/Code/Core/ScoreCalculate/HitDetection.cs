@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace PizzaMaker
+namespace PizzaMaker.Code.Core.ScoreCalculate
 {
     public class HitDetection : MonoBehaviour
     { 

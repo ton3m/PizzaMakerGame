@@ -23,14 +23,14 @@ namespace PizzaMaker.Code.Core.Health
             if (_health == null)
                 throw new NullReferenceException(nameof(_health));
                 
-            UpdateValue(0, _health.HP.Value);
+            UpdateValue(_health.HP.Value);
             
             _disposable = _health.HP.Subscribe(UpdateValue);
         }
 
         private void OnDestroy() => _disposable?.Dispose();
 
-        private void UpdateValue(float old, float current) =>
+        private void UpdateValue(float current) =>
             _valueText.text = current.ToString(CultureInfo.InvariantCulture);
     }
 }

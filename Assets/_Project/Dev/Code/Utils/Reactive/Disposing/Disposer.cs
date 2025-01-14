@@ -15,6 +15,16 @@ namespace PizzaMaker.Code.Utils.Reactive.Disposing
             }
         }
 
-        public void Add(IDisposable disposable) => _disposables.Add(disposable);
+        public IDisposer Add(IDisposable disposable)
+        {
+            _disposables.Add(disposable);
+            return this;
+        }
+
+        public IDisposer AddRange(IEnumerable<IDisposable> disposables)
+        {
+            _disposables.AddRange(disposables);
+            return this;
+        }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using PizzaMaker.Code.Consts;
 using PizzaMaker.Code.Entry.Bootstraps;
+using PizzaMaker.Code.Entry.Bootstraps.Main;
 using PizzaMaker.Code.Services.CoroutinePerformer;
 using PizzaMaker.Code.Services.Loaders;
 using PizzaMaker.Code.Services.Loaders.Scene;
 using PizzaMaker.Code.Services.Loaders.Scene.PizzaMaker.Code.Services.Loaders.Scene;
 using PizzaMaker.Code.Services.LoadingCurtain;
-using PizzaMaker.Code.Services.Logging;
 using PizzaMaker.Code.Utils.DI;
+using PizzaMaker.Code.Utils.Logging;
 using UnityEngine;
 
 namespace PizzaMaker.Code.Entry
@@ -61,7 +62,7 @@ namespace PizzaMaker.Code.Entry
             _container.RegisterAsSingle<ILoadingCurtain>(c =>
             {
                 var loader = _container.Resolve<ResourcesLoader>();
-                LoadingCurtain prefab = loader.LoadResource<LoadingCurtain>(ResourcesPaths.LoadingCurtain);
+                LoadingCurtain prefab = loader.Load<LoadingCurtain>(ResourcesPaths.LoadingCurtain);
                 return Instantiate(prefab);
             });
         }
@@ -71,7 +72,7 @@ namespace PizzaMaker.Code.Entry
             _container.RegisterAsSingle<ICoroutinePerformer>(c =>
             {
                 var loader = _container.Resolve<ResourcesLoader>();
-                CoroutinePerformer prefab = loader.LoadResource<CoroutinePerformer>(ResourcesPaths.CoroutinePerformer);
+                CoroutinePerformer prefab = loader.Load<CoroutinePerformer>(ResourcesPaths.CoroutinePerformer);
                 return Instantiate(prefab);
             });
         }

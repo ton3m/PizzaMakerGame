@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 
 namespace PizzaMaker.Code.Utils.Reactive.Disposing
 {
     public interface IDisposer : IDisposable
     {
-        void Add(IDisposable disposable);
+        IDisposer Add(IDisposable disposable);
+        IDisposer AddRange(IEnumerable<IDisposable> disposables);
     }
 }

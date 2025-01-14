@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using PizzaMaker.Code.Entry.Bootstraps;
-using PizzaMaker.Code.Entry.Bootstraps.SceneBootstraps;
+using PizzaMaker.Code.Entry.Bootstraps.Main;
 using PizzaMaker.Code.Services.Loaders.Scene;
-using PizzaMaker.Code.Services.Logging;
 using PizzaMaker.Code.Utils.DI;
+using PizzaMaker.Code.Utils.Logging;
 
 namespace PizzaMaker.Code.Services.SceneLauncher
 {
@@ -22,7 +22,7 @@ namespace PizzaMaker.Code.Services.SceneLauncher
             switch (sceneName)
             {
                 case var _ when sceneName == SceneId.Bootstrap.ToString():
-                    throw new Exception("Bootstrap scene can't be loaded");
+                    throw new Exception($"Bootstrap scene can't be loaded from {typeof(SceneLauncher)}");
 
                 case var _ when sceneName == SceneId.Gameplay.ToString():
                     yield return LaunchGameplayScene(container);

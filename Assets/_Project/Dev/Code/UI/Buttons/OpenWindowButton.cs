@@ -1,5 +1,5 @@
 ﻿using System;
-using PizzaMaker.Code.UI.Windows;
+using PizzaMaker.Code.Services.UI.Windows;
 using UnityEngine;
 
 namespace PizzaMaker.Code.UI.Buttons

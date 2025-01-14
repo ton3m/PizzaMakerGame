@@ -1,4 +1,4 @@
-﻿using PizzaMaker.Code.Utils.Reactive.Main;
+﻿using PizzaMaker.Code.Utils.Reactive;
 
 namespace PizzaMaker.Code.Core.Health
 {

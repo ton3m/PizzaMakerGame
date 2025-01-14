@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace PizzaMaker
+namespace PizzaMaker.Code.Core.ScoreCalculate
 {
     public class TimingTestView : MonoBehaviour
     {

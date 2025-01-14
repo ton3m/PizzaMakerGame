@@ -1,5 +1,4 @@
-using PizzaMaker.Code.Utils.Reactive.Main;
-using PizzaMaker.Code.Utils.Reactive.Main.Abstraction;
+using PizzaMaker.Code.Utils.Reactive;
 using UnityEngine;
 
 namespace PizzaMaker.Code.Core.Collision
@@ -13,16 +12,16 @@ namespace PizzaMaker.Code.Core.Collision
         private readonly Subject<UnityEngine.Collision> _collisionLeft = new();
 
         private void OnTriggerEnter(Collider other) =>
-            triggerEntered.Notify(null, other);
+            triggerEntered.Notify(other);
 
         private void OnTriggerExit(Collider other) =>
-            triggerLeft.Notify(null, other);
+            triggerLeft.Notify(other);
 
         private void OnCollisionEnter(UnityEngine.Collision collision) =>
-            _collisionEntered.Notify(null, collision);
+            _collisionEntered.Notify(collision);
         
         private void OnCollisionExit(UnityEngine.Collision collision) =>
-            _collisionLeft.Notify(null, collision);
+            _collisionLeft.Notify(collision);
 
         public IObservable<Collider> TriggerEntered => triggerEntered;
         public IObservable<Collider> TriggerLeft => triggerLeft;

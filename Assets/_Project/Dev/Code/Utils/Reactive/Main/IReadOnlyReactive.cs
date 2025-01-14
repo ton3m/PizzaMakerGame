@@ -1,6 +1,4 @@
-using PizzaMaker.Code.Utils.Reactive.Main.Abstraction;
-
-namespace PizzaMaker.Code.Utils.Reactive.Main
+namespace PizzaMaker.Code.Utils.Reactive
 {
     public interface IReadOnlyReactive<T> : IObservable<T>
     {

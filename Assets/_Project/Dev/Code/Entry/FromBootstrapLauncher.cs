@@ -13,7 +13,7 @@ namespace PizzaMaker.Code.Entry
         private static void Launch()
         {
             var resourceLoader = new ResourcesLoader();
-            var config = resourceLoader.LoadResource<GameLaunchConfig>(ResourcesPaths.GameLaunchConfig);
+            var config = resourceLoader.Load<GameLaunchConfig>(ResourcesPaths.GameLaunchConfig);
 
             if (config.StartFromBootstrapScene)
             {

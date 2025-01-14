@@ -2,7 +2,7 @@
 using PizzaMaker.Code.Core.Upgrade;
 using UnityEngine;
 
-namespace PizzaMaker
+namespace PizzaMaker.Code.Core.ScoreCalculate
 {
     public class ScoreCalculating
     {
