@@ -1,6 +1,6 @@
 ﻿namespace PizzaMaker.Code.Core.Upgrade.UpgradeViews
 {
-    public class OvenUpgradeView: UpgradeView
+    public class SauсeUpgradeView: UpgradeView
     {
     
     }

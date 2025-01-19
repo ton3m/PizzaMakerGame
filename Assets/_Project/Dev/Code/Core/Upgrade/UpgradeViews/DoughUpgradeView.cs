@@ -1,7 +1,7 @@
-﻿namespace PizzaMaker.Code.Core.Upgrade.DoughMVP
+﻿namespace PizzaMaker.Code.Core.Upgrade.UpgradeViews
 {
     public class DoughUpgradeView: UpgradeView
     {
-        
+    
     }
 }

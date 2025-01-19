@@ -1,31 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 using PizzaMaker.Code.Core.Upgrade;
+using System.Linq;
 using UnityEngine;
 
 namespace PizzaMaker.Code.Core.ScoreCalculate
 {
     public class ScoreCalculating
     {
-        private UpgradeModel _ovenUpgradeModel;
-        public UpgradeModel _doughUpgradeModel;
-        
         private readonly Func<float> _normalizedPosition;
         public float TotalScore { get; private set; }
         private float _ingredientsCost;
         
         private float _timingTestScore;
-        private float _ovenMultiplier = 1;
-        private float _douthMultiplier = 1;
+
+        private IReadOnlyList<UpgradeModel> _upgradeModels = new List<UpgradeModel>();
+        private float _sumMultiplier = 1;
+
         
-        public ScoreCalculating (Func <float> normalizedPosition, UpgradeModel ovenUpgradeModel, UpgradeModel doughUpgradeModel)
+        public ScoreCalculating (Func <float> normalizedPosition, IReadOnlyList<UpgradeModel> upgradeModels)
         {
             _normalizedPosition = normalizedPosition;
-            
-            _ovenUpgradeModel = ovenUpgradeModel;
-            _doughUpgradeModel = doughUpgradeModel;
-            
+            _upgradeModels = upgradeModels;
         }
-
 
         public void TotalScoreCalculate()
         {
@@ -34,8 +31,7 @@ namespace PizzaMaker.Code.Core.ScoreCalculate
 
         public void OnLevelUpgraded()
         {
-            _ovenMultiplier = _ovenUpgradeModel.Multiplier;
-            _douthMultiplier = _doughUpgradeModel.Multiplier;
+            _upgradeModels.ToList().ForEach(upgradeModel => _sumMultiplier += upgradeModel.Multiplier * upgradeModel.Level);
         }
         
         public void OnIndicatorStop()
@@ -46,7 +42,7 @@ namespace PizzaMaker.Code.Core.ScoreCalculate
 
         public void TimingTestScoreCalculate(float normalizedPosition)
         {
-            _timingTestScore = (1 - Mathf.Abs(normalizedPosition)) * 100 * _ovenMultiplier;
+            _timingTestScore = (1 - Mathf.Abs(normalizedPosition)) * 100 * _sumMultiplier;
             Debug.Log($"Timing test score: {_timingTestScore}");
         }
         

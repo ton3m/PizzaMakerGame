@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Hyper-Casual-Runner.sln"
+    "dotnet.defaultSolution": "Hyper-Casual-Runner.sln",
+    "dotnet.preferCSharpExtension": true
 }

@@ -1,50 +1,50 @@
 ﻿using System;
+using PizzaMaker.Code.Services;
+using PizzaMaker.Code.Utils.Reactive;
 
 namespace PizzaMaker.Code.Core.Upgrade
 {
-    public class UpgradePresenter : IDisposable
-    {
-        private IUpgradeble _model;
-        private IUpgradeView  _view;
+	public class UpgradePresenter : IDisposable
+	{
+		private IUpgradeble _model;
+		private IUpgradeView  _view;
+		private MoneyService _moneyService;
 
-        public UpgradePresenter(IUpgradeble model, IUpgradeView view)
-        {
-            _model = model;
-            _view = view;
+		private Event _levelUpgraded = new();
 
-            _view.UpgradeButtonClicked += OnUpgradeButtonClicked;
-            
-            UpdateView();
-        }
+		public UpgradePresenter(IUpgradeble model, IUpgradeView view, MoneyService moneyService)
+		{
+			_model = model;
+			_view = view;
+			_moneyService = moneyService;
 
-        public event Action LevelUpgraded;
+			_view.UpgradeButtonClicked += OnUpgradeButtonClicked;
+			
+			UpdateView();
+		}
 
-        public void Dispose()
-        {
-            _view.UpgradeButtonClicked -= OnUpgradeButtonClicked;
-        }
+		public IObservable LevelUpgraded => _levelUpgraded;
 
-        public void OnUpgradeButtonClicked()
-        {
-            if (CanUpgrade())
-            { 
-                _model.Upgrade();
-                LevelUpgraded?.Invoke();
-                UpdateView();
-            }
-        }
+		public void Dispose()
+		{
+			_view.UpgradeButtonClicked -= OnUpgradeButtonClicked;
+		}
 
-        private bool CanUpgrade()
-        {
-            // TODO: add a check for the ability to purchase
-            return true;
-        }
+		public void OnUpgradeButtonClicked()
+		{
+			if (_moneyService.TryRemoveMoney(_model.UpgradeCost))
+			{
+				_model.Upgrade();
+				 _levelUpgraded.Notify();
+				 UpdateView();
+			}
+		}
 
-        private void UpdateView()
-        {
-            _view.SetLevel(_model.Level);
-            _view.SetMultiplier(_model.Multiplier);
-            _view.SetUpgradeCost(_model.UpgradeCost);
-        }
-    }
+		private void UpdateView()
+		{
+			_view.SetLevel(_model.Level);
+			_view.SetMultiplier(_model.Multiplier);
+			_view.SetUpgradeCost(_model.UpgradeCost);
+		}
+	}
 }

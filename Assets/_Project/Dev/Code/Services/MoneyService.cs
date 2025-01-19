@@ -39,12 +39,15 @@ namespace PizzaMaker.Code.Services
             return _money >= cost;
         }
 
-        public void TryRemoveMoney(int cost)
+        public bool TryRemoveMoney(int cost)
         {
             if (HasEnoughMoney(cost))
             {
                 _money -= cost;
+                return true;
             }
+            else
+                return false;
         }
     }
 }
