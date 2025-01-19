@@ -6,6 +6,7 @@ namespace PizzaMaker.Code.Core.Upgrade
 {
     public class UpgradeMvpFactory
     {
+        public MoneyService MoneyService { get; set; }
         public UpgradePresenter OvenUpgradePresenter { get; private set; }
         public UpgradePresenter DoughUpgradePresenter { get; private set; }
 
@@ -32,7 +33,7 @@ namespace PizzaMaker.Code.Core.Upgrade
         private UpgradePresenter CreateUpgradePresenter(UpgradeModel ovenUpgradeModel)
         {
             UpgradeView ovenUpgradeView = Object.FindAnyObjectByType<OvenUpgradeView>();
-            UpgradePresenter upgradePresenter = new UpgradePresenter(ovenUpgradeModel, ovenUpgradeView);
+            UpgradePresenter upgradePresenter = new UpgradePresenter(ovenUpgradeModel ,ovenUpgradeView, MoneyService);
             return upgradePresenter;
         }
     }
